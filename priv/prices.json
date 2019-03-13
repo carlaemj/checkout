@@ -1,0 +1,13 @@
+[
+  {"CODE": "VOUCHER",
+    "NAME":  "Cabify Voucher",
+    "PRICE":  5.0},
+
+  {"CODE": "TSHIRT",
+    "NAME":  "Cabify T-Shirt",
+    "PRICE":  20.0},
+
+  {"CODE": "MUG",
+    "NAME":  "Cabify Coffee Mug",
+    "PRICE":  7.50}
+]
