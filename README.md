@@ -1,6 +1,5 @@
 # Checkout
-
-**TODO: Add description**
+Code challenge wrote in Elixir
 
 ## Installation
 
