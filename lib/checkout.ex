@@ -25,27 +25,21 @@ defmodule Checkout do
 
   @spec new() :: {:ok, pid}
   def new do
-    Agent.start_link(fn -> [] end, name: __MODULE__)
+    Agent.start_link(fn -> %{} end, name: __MODULE__)
   end
 
   @spec total(%{}) :: float
   def total(pricing_rules \\ %{}) do
-    all_codes = Agent.get(__MODULE__, fn l -> l end)
-    processed_items = map_item_to_quantity(all_codes)
-    plist = prices_list(processed_items, pricing_rules)
+    items_bought = Agent.get(__MODULE__, fn m -> m end)
+    plist = prices_list(items_bought, pricing_rules)
     final_price = Enum.sum(plist)
     final_price
   end
 
   @spec scan(String.t) :: :ok
   def scan(code) do
-    Agent.update(__MODULE__, fn l -> [code | l] end)
-  end
-
-  defp map_item_to_quantity(all_codes) do
-    types = Enum.uniq(all_codes)
-    counter = Enum.map(types, fn type -> Enum.count(all_codes, fn item -> item == type end) end)
-    for {t, c} <- Enum.zip(types, counter), into: %{}, do: {t, c}
+    IO.puts(code)
+    Agent.update(__MODULE__, fn m -> Map.update(m, code, 1, &(&1 + 1)) end)
   end
 
   defp compute_price({item_type, quantity}, rules) do
@@ -66,4 +60,5 @@ defmodule Checkout do
     end
 
   end
+
 end
