@@ -1,19 +1,23 @@
 defmodule Price do
   @moduledoc false
-  @prices_file "priv/prices.json"
-  @prices_content File.read!(@prices_file)
-  @prices Poison.Parser.parse(@prices_content)
+  @items_file "priv/prices.json"
+  @items_content File.read!(@items_file)
+  @items Poison.Parser.parse(@items_content)
 
   @spec get(String.t()) :: float
   def get(code) do
-    prices = process()
-    p = Map.get(prices, String.to_atom(code))
-    Map.get(p, :price)
+
+    items_catalog = process()
+
+    case Map.get(items_catalog, String.to_atom(code)) do
+      %{price: item_price} -> item_price
+      _ -> 0.0  # Exception?
+    end
+
   end
 
-  @spec process() :: %{}
-  def process() do
-    {:ok, p} = @prices
+  defp process() do
+    {:ok, p} = @items
 
     for %{"NAME" => name, "CODE" => code, "PRICE" => price} <- p,
         into: %{},
