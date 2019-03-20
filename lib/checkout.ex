@@ -31,19 +31,14 @@ defmodule Checkout do
   @spec total(%{}) :: float
   def total(pricing_rules \\ %{}) do
     all_codes = Agent.get(__MODULE__, fn l -> l end)
-    #    require IEx; IEx.pry
     processed_items = map_item_to_quantity(all_codes)
-    IO.puts(inspect(processed_items))
     plist = prices_list(processed_items, pricing_rules)
-    IO.puts(inspect(plist))
     final_price = Enum.sum(plist)
-    IO.puts("Total: #{final_price}")
     final_price
   end
 
   @spec scan(String.t) :: :ok
   def scan(code) do
-    IO.puts(code)
     Agent.update(__MODULE__, fn l -> [code | l] end)
   end
 
