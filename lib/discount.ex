@@ -16,15 +16,16 @@ defmodule Discount do
   """
 
   @spec get(String.t, float,  float) :: (number, number -> number)
-  def get("PRICE_REDUCTION", first, second) do
-    fn c, p -> if c >= second do c * first else c * p end end
+  def get("PRICE_REDUCTION", new_price, threshold) do
+    fn c, p -> if c >= threshold do c * new_price else c * p end end
   end
 
-  def get("MANY_FOR_MANY", first, second) do
-    &(&2 * (second * div(&1, first) + rem(&1, first)))
+  def get("MANY_FOR_MANY", items_got, items_paid) do
+    &(&2 * (items_paid * div(&1, items_got) + rem(&1, items_got)))
   end
 
   def get(_, _first, _second) do
     &(&1 * &2)
   end
+
 end
