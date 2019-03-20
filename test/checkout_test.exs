@@ -1,4 +1,4 @@
-ExUnit.start()
+
 
 defmodule CheckoutTest do
   use ExUnit.Case
@@ -61,20 +61,27 @@ defmodule CheckoutTest do
     assert(Checkout.total(discounts) == 81.00)
   end
 
-  test "CASE 4" do
+  test "Empty cart with discounts" do
     discounts = %{
       TSHIRT: Discount.get("PRICE_REDUCTION", 19.0, 3),
       VOUCHER: Discount.get("MANY_FOR_MANY", 2, 1)
     }
 
     Checkout.new()
-    Checkout.scan("VOUCHER")
-    Checkout.scan("TSHIRT")
-    Checkout.scan("VOUCHER")
-    Checkout.scan("VOUCHER")
-    Checkout.scan("MUG")
-    Checkout.scan("TSHIRT")
-    Checkout.scan("TSHIRT")
-    assert(Checkout.total(discounts) == 74.50)
+    assert(Checkout.total(discounts) == 0.0)
   end
+
+  test "Empty cart without discounts" do
+
+    Checkout.new()
+    assert(Checkout.total() == 0.0)
+  end
+
+  test "Unrecognized item" do
+
+    Checkout.new()
+    Checkout.scan("PEN")
+    assert(Checkout.total() == 0.0)
+  end
+
 end
