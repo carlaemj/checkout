@@ -1,5 +1,27 @@
 defmodule Checkout do
-  @moduledoc false
+  @moduledoc """
+  This is the Checkout module.
+  """
+
+  @doc """
+  Takes a series of items through scan and then calculates the price applying
+  item-type specific discount rules if available.
+
+  Returns 'float'.
+
+  ## Examples
+
+    iex> rules = %{"MUG": Discount.get("MANY_FOR_MANY", 3, 1)}
+    iex> Checkout.new()
+    iex> Checkout.scan("MUG")
+    :ok
+    iex> Checkout.scan("MUG")
+    :ok
+    iex> Checkout.scan("MUG")
+    :ok
+    iex> Checkout.total(rules)
+    7.5
+  """
 
   @spec new() :: {:ok, pid}
   def new do

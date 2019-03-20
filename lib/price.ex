@@ -1,5 +1,18 @@
 defmodule Price do
-  @moduledoc false
+  @moduledoc """
+  This module provides the price of the store items. It loads a JSON file
+  with prices and some other data.
+  """
+
+  @doc """
+  Takes an item code and returns its price.
+
+  ## Examples
+
+    >iex Price.get("MUG")
+    7.5
+  """
+
   @items_file "priv/prices.json"
   @items_content File.read!(@items_file)
   @items Poison.Parser.parse(@items_content)

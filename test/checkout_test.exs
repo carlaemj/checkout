@@ -3,6 +3,8 @@
 defmodule CheckoutTest do
   use ExUnit.Case
 
+  doctest Checkout
+
   test "somehow works" do
     Checkout.new()
     Checkout.scan("TSHIRT")

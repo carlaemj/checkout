@@ -1,7 +1,8 @@
 
 defmodule DiscountTest do
-
   use ExUnit.Case
+
+  doctest Discount
 
   test "3 x 2 and remains" do
 
